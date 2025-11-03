@@ -11,7 +11,7 @@ function ProductPage() {
   const addProduct = useCartStore((state) => state.addProduct);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-4 sm:px-6 lg:px-8">
       <h2 className="text-xl font-semibold">Products</h2>
       <div className="space-y-3">
         {mockProducts.map((product) => (

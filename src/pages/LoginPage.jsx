@@ -5,6 +5,7 @@ function LoginPage() {
   const [username, setUsername] = useState("johndoe");
   const [firstName, setFirstName] = useState("John");
   const [lastName, setLastName] = useState("Doe");
+  const [errors, setErrors] = useState({});
 
   const {
     login,
@@ -13,9 +14,21 @@ function LoginPage() {
     username: currentUsername,
   } = useUserStore();
 
+  const validate = () => {
+    const newErrors = {};
+    if (!username) newErrors.username = "Username is required";
+    if (!firstName) newErrors.firstName = "First name is required";
+    if (!lastName) newErrors.lastName = "Last name is required";
+    return newErrors;
+  };
+
   const handleLogin = () => {
-    if (username && firstName && lastName) {
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
       login({ username, firstName, lastName });
+      setErrors({});
     }
   };
 
@@ -39,7 +52,7 @@ function LoginPage() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-4 sm:px-6 lg:px-8">
       <h2 className="text-xl font-semibold">Login Page</h2>
       <div>
         <label className="block text-sm font-medium text-gray-700">
@@ -52,6 +65,9 @@ function LoginPage() {
           onChange={(e) => setUsername(e.target.value)}
           className={inputStyles}
         />
+        {errors.username && (
+          <p className="text-red-500 text-xs mt-1">{errors.username}</p>
+        )}
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">
@@ -64,6 +80,9 @@ function LoginPage() {
           onChange={(e) => setFirstName(e.target.value)}
           className={inputStyles}
         />
+        {errors.firstName && (
+          <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>
+        )}
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">
@@ -76,6 +95,9 @@ function LoginPage() {
           onChange={(e) => setLastName(e.target.value)}
           className={inputStyles}
         />
+        {errors.lastName && (
+          <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>
+        )}
       </div>
       <button onClick={handleLogin} className={buttonStyles}>
         Log In

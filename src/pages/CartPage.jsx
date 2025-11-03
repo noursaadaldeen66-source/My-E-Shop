@@ -14,7 +14,7 @@ function CartPage() {
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-4 sm:px-6 lg:px-8">
       <h2 className="text-xl font-semibold">Your Cart</h2>
       {cart.length === 0 ? (
         <p className="text-gray-500">Your cart is empty.</p>
